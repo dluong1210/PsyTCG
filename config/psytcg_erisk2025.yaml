@@ -1,0 +1,57 @@
+# eRisk 2025 setting: train on the pooled eRisk 2017 / 2018 / 2022 collections,
+# test on eRisk 2025. The earlier collections contain target-authored posts with
+# no conversational context, so their graphs are built in `posts` mode from
+# generated replies (see data_processing/README.md).
+#
+# Build the pooled training pickle by merging the three per-collection pickles:
+#   python - <<'PY'
+#   import pickle
+#   merged = {}
+#   for year in (2017, 2018, 2022):
+#       with open(f"data/graphs/{year}.pkl", "rb") as f:
+#           merged.update(pickle.load(f))
+#   with open("data/graphs/2017_2018_2022.pkl", "wb") as f:
+#       pickle.dump(merged, f, protocol=pickle.HIGHEST_PROTOCOL)
+#   PY
+name: psytcg-erisk2025
+
+data:
+  train_timelines: data/graphs/2017_2018_2022.pkl
+  test_timelines: data/graphs/2025.pkl
+  train_labels: data/labels/2017_2018_2022.txt
+  test_labels: data/labels/2025.txt
+  val_fraction: 0.1
+  split_seed: 2025
+  max_conversations: 50      # rounds are single posts here, so windows are longer
+  window_stride: 40          # paper setting (Appendix A.2)
+
+model:
+  post_input_dim: 1024
+  post_hidden_dim: 1024
+  memory_dim: 256
+  other_rnn: gru
+  target_rnn: t-lstm
+  dropout: 0.2
+  gat_heads: 8
+  gat_time_dim: 8
+  use_time_attention: false
+  use_context_gate: true
+  other_memory_scope: persistent
+  child_memory_mode: post
+  post_encoder_checkpoint: checkpoints/post_encoder.pt
+  freeze_post_encoder: false
+
+train:
+  output_dir: runs/erisk2025
+  epochs: 25
+  seeds: [42, 99, 2025, 68, 3407]
+  lr: 3.0e-5
+  lr_post_encoder: 3.0e-5
+  weight_decay: 1.0e-3
+  warmup_ratio: 0.1
+  accumulation_steps: 4      # effective user batch size = 4
+  grad_clip_norm: 1.0
+  post_batch_size: 128
+  early_stop_patience: 5
+  selection_metric: f1
+  decision_threshold: 0.5

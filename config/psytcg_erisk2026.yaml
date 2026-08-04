@@ -1,0 +1,44 @@
+# eRisk 2026 setting: train on the eRisk 2025 collection, test on eRisk 2026.
+# 10% of the 2025 users are held out for validation and epoch selection.
+name: psytcg-erisk2026
+
+data:
+  train_timelines: data/graphs/2025.pkl
+  test_timelines: data/graphs/2026.pkl
+  train_labels: data/labels/2025.txt
+  test_labels: data/labels/2026.txt
+  val_fraction: 0.1
+  split_seed: 42
+  max_conversations: 12      # rounds per training window
+  window_stride: 12          # non-overlapping windows
+
+model:
+  post_input_dim: 1024
+  post_hidden_dim: 1024
+  memory_dim: 256
+  other_rnn: gru             # interlocutor memory
+  target_rnn: t-lstm         # target memory, time-decayed
+  dropout: 0.2
+  gat_heads: 8
+  gat_time_dim: 8
+  use_time_attention: false
+  use_context_gate: true
+  other_memory_scope: persistent
+  child_memory_mode: post
+  post_encoder_checkpoint: checkpoints/post_encoder.pt
+  freeze_post_encoder: false
+
+train:
+  output_dir: runs/erisk2026
+  epochs: 25
+  seeds: [42, 99, 2025, 3407]
+  lr: 3.0e-5
+  lr_post_encoder: 3.0e-5
+  weight_decay: 1.0e-3
+  warmup_ratio: 0.1
+  accumulation_steps: 2
+  grad_clip_norm: 1.0
+  post_batch_size: 128
+  early_stop_patience: 5
+  selection_metric: f1
+  decision_threshold: 0.5

@@ -1,0 +1,6 @@
+base_model: rafalposwiata/deproberta-large-depression
+rel_sev_checkpoint: checkpoints/rel_sev.pt
+emotion_model_dir: checkpoints/emotion
+relevance_threshold: 0.5
+batch_size: 512
+max_length: 128

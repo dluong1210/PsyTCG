@@ -1,0 +1,33 @@
+model: JunHowie/Qwen3-14B-GPTQ-Int4
+raw_dir: data/raw/2025
+output_dir: outputs/llm
+max_model_len: 4096
+batch_size: 8
+tensor_parallel_size: 1
+gpu_memory_utilization: 0.90
+dtype: auto
+max_new_tokens: 16
+max_retries: 3
+trust_remote_code: true
+enable_thinking: false
+recent_k: 10
+overflow_side: latest
+
+system_prompt: >-
+  You are a depression-screening classifier for social-media text. Classify
+  only the mental state of the user marked TARGET. Text from other users is
+  context only; never attribute it to TARGET. Output 1 only when TARGET's own
+  writing provides meaningful evidence of depression, such as a
+  self-report/diagnosis or a sustained cluster of depressive symptoms. A single
+  ordinary negative emotion is not sufficient. Return exactly 1 for depression
+  or 0 for no depression, with no explanation.
+
+conversation_prompt: |-
+  Determine whether the TARGET user has depression from the following conversation. Nodes are marked TARGET or OTHER, and reply relationships are included when available.
+
+  CONVERSATION:
+
+timeline_prompt: |-
+  Determine whether the TARGET user has depression from the following chronological timeline of that user's own posts/comments. Each entry may originate from a different conversation.
+
+  TARGET TIMELINE (oldest to newest):

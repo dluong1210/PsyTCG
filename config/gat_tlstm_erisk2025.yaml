@@ -1,0 +1,32 @@
+# Controlled baseline reported for the eRisk 2025 setting.
+name: gat-tlstm-erisk2025
+
+data:
+  train_timelines: data/graphs/2017_2018_2022.pkl
+  test_timelines: data/graphs/2025.pkl
+  train_labels: data/labels/2017_2018_2022.txt
+  test_labels: data/labels/2025.txt
+  val_fraction: 0.1
+  split_seed: 42
+  max_conversations: 50
+  window_stride: 40
+
+baseline:
+  post_encoder_checkpoint: checkpoints/post_encoder.pt
+  dropout: 0.2
+  freeze_post_encoder: false
+
+train:
+  output_dir: runs/gat_tlstm_erisk2025
+  epochs: 25
+  seeds: [2025]
+  lr: 1.0e-5
+  lr_post_encoder: 1.0e-5
+  weight_decay: 1.0e-3
+  warmup_ratio: 0.1
+  accumulation_steps: 4
+  grad_clip_norm: 1.0
+  post_batch_size: 128
+  early_stop_patience: 8
+  selection_metric: f1
+  decision_threshold: 0.5
