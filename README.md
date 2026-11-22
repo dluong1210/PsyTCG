@@ -1,6 +1,7 @@
 # PsyTCG: Modeling Interpersonal Psychological Dynamics via Role-Asymmetric Temporal Conversation Graphs for Depression Detection
+**Official implementation of our paper accepted at EACL 2027**
 
-Official implementation of **PsyTCG**, a framework for depression-risk detection from social-media conversations and longitudinal user histories.
+This repository provides the official implementation of **PsyTCG**, a framework for depression-risk detection from social-media conversations and longitudinal user histories.
 
 This public release contains the main PsyTCG model, the controlled GAT--TLSTM baseline, and two LLM baselines.
 
@@ -214,10 +215,11 @@ The source code is released under the [MIT License](LICENSE). Dataset licenses a
 The paper is currently anonymized. Until the author list and venue metadata are public, cite it by title:
 
 ```bibtex
-@inproceedings{psytcg2026,
-  title     = {{PsyTCG}: Modeling Interpersonal Psychological Dynamics via
-               Role-Asymmetric Temporal Conversation Graphs for Depression Detection},
-  author    = {Anonymous},
-  year      = {2026}
+@unpublished{tran2027psytcg,
+  title  = {{PsyTCG}: Modeling Interpersonal Psychological Dynamics via Role-Asymmetric Temporal Conversation Graphs for Depression Detection},
+  author = {Tran, Duc-Luong and Mai, Tu-Phuong and Chu, Phuong-Anh and Do, Hoang-Dat and Can, Duy-Cat and Ch{'e}n, Oliver Y. and Le, Hoang-Quynh},
+  note   = {Accepted at the 20th Conference of the European Chapter of the Association for Computational Linguistics (EACL 2027)},
+  year   = {2027}
+}
 }
 ```
