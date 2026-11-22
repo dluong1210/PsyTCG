@@ -212,8 +212,6 @@ The source code is released under the [MIT License](LICENSE). Dataset licenses a
 
 ## Citation
 
-The paper is currently anonymized. Until the author list and venue metadata are public, cite it by title:
-
 ```bibtex
 @unpublished{tran2027psytcg,
   title  = {{PsyTCG}: Modeling Interpersonal Psychological Dynamics via Role-Asymmetric Temporal Conversation Graphs for Depression Detection},
